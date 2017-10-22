@@ -92,7 +92,8 @@ dns_update () {
 
 case "$1" in
 	start|up)
-		docker-compose up -d && wp_setup && dns_update
+		docker-compose up -d && wp_setup
+		dns_update
 		;;
 	stop)
 		docker-compose stop
