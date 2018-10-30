@@ -131,6 +131,22 @@ case "$1" in
 	mysql)
 		sudo -E docker-compose exec mysql mysql -u root --password=password $COMPOSE_PROJECT_NAME
 		;;
+	test_setup)
+		if [ -e $2 ]; then
+			echo "Plugin name to run tests on must be passed as argument"
+			exit 3
+		fi
+		sudo -E docker-compose exec --user root phpfpm bash -c \
+			"(cd wp-content/plugins/$2 ; bin/install-wp-tests.sh test-$2 root password mysql )"
+		;;
+	test)
+		if [ -e $2 ]; then
+			echo "Plugin name to run tests on must be passed as argument"
+			exit 3
+		fi
+		sudo -E docker-compose exec --user root phpfpm bash -c \
+			"(cd wp-content/plugins/$2 ; phpunit )"
+		;;
 	*)
 		echo "Usage: $0 [start|stop|bash|wp]" >&2
 		exit 3
