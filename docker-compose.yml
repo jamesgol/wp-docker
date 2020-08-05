@@ -1,7 +1,7 @@
 version: '2'
 services:
   mysql:
-    image: mysql:latest
+    image: mysql:5
     volumes:
       - "./data/db:/var/lib/mysql"
       - "./config/mysql/:/etc/mysql/conf.d/"
